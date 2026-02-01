@@ -1,0 +1,703 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    --bg-main: #0d1117;       /* Noir GitHub */
+    --bg-card: #161b22;       /* Gris foncé cartes */
+    --border: #30363d;        /* Bordures */
+    --text-main: #c9d1d9;     /* Blanc cassé */
+    --text-muted: #8b949e;    /* Gris texte */
+    --accent: #58a6ff;        /* Bleu GitHub */
+    --btn-gray: #21262d;      
+    --btn-green: #238636;     
+    --btn-hover: #30363d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding-top: 80px; /* Espace pour la barre fixe */
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* =========================================
+   2. NAVIGATION FIXE (ANIMÉE)
+   ========================================= */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1000;
+    
+    /* Animation du fond "Gradient Flow" */
+    background: linear-gradient(270deg, #0d1117, #161b22, #1c2128, #262c36);
+    background-size: 400% 400%;
+    animation: navAnimation 15s ease infinite;
+
+    border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    
+    display: flex;
+    align-items: center;
+}
+
+/* Keyframes pour faire bouger le fond */
+@keyframes navAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Ligne Laser Cyber en bas du menu */
+nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    animation: scanLine 3s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes scanLine {
+    0% { background-position: -50% 0; }
+    100% { background-position: 150% 0; }
+}
+
+.nav-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #f0f6fc;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 2; /* Au dessus du laser */
+}
+/* =========================================
+   STYLE DU NOUVEAU LOGO ROND DANS LA NAV
+   ========================================= */
+.nav-logo-img {
+    height: 40px;       /* Taille fixe pour s'adapter à la barre */
+    width: 40px;        /* Largeur égale pour un rond parfait */
+    border-radius: 50%; /* C'est ça qui rend l'image ronde */
+    object-fit: cover;  /* Empêche l'image d'être déformée */
+    
+    /* Optionnel : petite bordure brillante style Cyber */
+    border: 2px solid var(--accent); 
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
+}
+
+.nav-content ul { display: flex; gap: 25px; }
+
+.nav-content ul a {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+}
+
+.nav-content ul a:hover, .nav-content ul a.active {
+    color: #f0f6fc;
+}
+
+/* Soulignement du lien actif */
+.nav-content ul a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent);
+}
+
+/* =========================================
+   3. LAYOUT PRINCIPAL (SIDEBAR + MAIN)
+   ========================================= */
+.layout-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
+}
+
+/* Sidebar Gauche */
+.sidebar-profile {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+}
+
+.profile-card img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid var(--border);
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.profile-card h2 { color: #f0f6fc; font-size: 1.4rem; margin-bottom: 5px; }
+
+.badge-role {
+    display: inline-block;
+    background: var(--btn-gray);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-bottom: 25px;
+}
+
+.contact-list { text-align: left; display: flex; flex-direction: column; gap: 15px; }
+.contact-item { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); }
+.contact-item i { color: var(--accent); width: 20px; text-align: center; }
+
+.social-links { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+.social-links a { color: var(--text-muted); font-size: 1.2rem; }
+.social-links a:hover { color: var(--accent); }
+
+/* Contenu Droit Principal */
+.main-content { flex-grow: 1; }
+
+.section-title {
+    font-size: 2rem;
+    color: #f0f6fc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+/* =========================================
+   4. STYLE PROJETS (GRID & CARTES)
+   ========================================= */
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.repo-card {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.repo-card:hover { 
+    border-color: var(--accent); 
+    transform: translateY(-2px); 
+}
+
+.repo-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 10px; 
+}
+
+.repo-name { color: var(--accent); font-weight: 600; font-size: 1.1rem; }
+.repo-badge { font-size: 0.75rem; border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; color: var(--text-muted); }
+
+.repo-card p { 
+    font-size: 0.9rem; 
+    color: var(--text-muted); 
+    margin-bottom: 15px; 
+    flex-grow: 1; 
+}
+
+/* Pied de carte (Langage + Bouton) */
+.repo-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid rgba(48, 54, 61, 0.5);
+}
+
+.repo-lang {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Bouton "Voir PDF" */
+.btn-view-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--btn-gray);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-view-pdf:hover {
+    background-color: #30363d;
+    color: var(--accent);
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-view-pdf i { font-size: 1rem; }
+
+
+/* =========================================
+   5. STYLE README (ACCUEIL)
+   ========================================= */
+.readme-section {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background-color: var(--bg-main);
+    margin-bottom: 30px;
+}
+
+.readme-header {
+    background-color: var(--bg-card);
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--text-main);
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.readme-content {
+    padding: 30px;
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.7;
+}
+
+.readme-content strong { color: #f0f6fc; }
+.readme-content h3, .readme-content h4 { color: #f0f6fc; }
+
+
+/* =========================================
+   6. STYLE RECOMMANDATION
+   ========================================= */
+.reco-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.reco-content {
+    font-style: italic;
+    color: var(--text-main);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.reco-content i { color: var(--text-muted); font-size: 1.2rem; margin-right: 10px; }
+
+.reco-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.reco-author strong { display: block; color: #f0f6fc; font-size: 0.95rem; }
+.reco-author span { color: var(--text-muted); font-size: 0.85rem; }
+
+.btn-pdf {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn-pdf:hover {
+    background-color: #30363d;
+    border-color: var(--text-muted);
+    color: #f0f6fc;
+}
+
+
+/* =========================================
+   7. AUTRES ELEMENTS (TIMELINE, SKILLS, FORM)
+   ========================================= */
+/* Timeline */
+.timeline { border-left: 2px solid var(--border); padding-left: 30px; margin-left: 10px; }
+.timeline-item { position: relative; margin-bottom: 30px; }
+.timeline-dot {
+    position: absolute; left: -37px; top: 5px; width: 12px; height: 12px;
+    background: var(--accent); border-radius: 50%; border: 2px solid var(--bg-main);
+}
+.timeline-date { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; }
+.institution { color: var(--accent); font-size: 0.9rem; display: block; margin-bottom: 5px; }
+
+/* Skills */
+.skills-grid { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid var(--border); }
+.skill-bar { margin-bottom: 15px; }
+.skill-bar .info { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; }
+.skill-bar .bar { background: var(--border); height: 6px; border-radius: 10px; overflow: hidden; }
+.skill-bar .progress { height: 100%; background: var(--accent); display: block; }
+
+/* Formulaire Contact */
+.form-box {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-width: 700px;
+}
+.form-group { margin-bottom: 20px; }
+.form-control {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    color: #f0f6fc;
+    padding: 12px;
+    border-radius: 6px;
+}
+.form-control:focus { outline: none; border-color: var(--accent); }
+.btn-submit {
+    background: var(--btn-green);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn-submit:hover { background: #2ea043; }
+
+
+/* =========================================
+   8. STYLE MODALE PDF (POPUP)
+   ========================================= */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-window {
+    background-color: #1e1e1e;
+    width: 90%;
+    height: 90%;
+    max-width: 1100px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-header {
+    background-color: #252526;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    border-radius: 8px 8px 0 0;
+}
+
+#modal-title {
+    font-weight: 600;
+    color: #f0f6fc;
+    font-size: 1.1rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #8b949e;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modal-close:hover { color: #ff5f56; }
+
+.modal-body {
+    flex: 1;
+    background-color: #1e1e1e;
+    overflow: hidden;
+}
+
+iframe { border: none; width: 100%; height: 100%; }
+
+.modal-footer {
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+}
+
+.btn-download-red {
+    background-color: transparent;
+    border: 1px solid #ff4b4b;
+    color: #ff4b4b;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-download-red:hover {
+    background-color: #ff4b4b;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* =========================================
+   9. RESPONSIVE
+   ========================================= */
+@media (max-width: 900px) {
+    .layout-container { flex-direction: column; }
+    .sidebar-profile { width: 100%; position: relative; top: 0; margin-bottom: 30px; }
+}
+
+/* =========================================
+   STYLE DU VISUALISEUR PDF (GRAND FORMAT)
+   ========================================= */
+
+.pdf-window-frame {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #444;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    /* On s'assure que le cadre prend toute la largeur dispo */
+    width: 100%; 
+}
+
+/* Barre d'outils (Faux header style application) */
+.pdf-toolbar-mockup {
+    background-color: #323639;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f1f3f4;
+    border-bottom: 1px solid #111;
+    font-size: 0.9rem;
+}
+
+.pdf-toolbar-mockup i { cursor: pointer; color: #aaa; margin-left: 15px; }
+.pdf-toolbar-mockup i:hover { color: #fff; }
+
+/* ZONE DU CONTENU - C'EST ICI QU'ON AGRANDIT */
+.pdf-content {
+    background-color: #525659; /* Fond gris derrière le papier */
+    
+    /* C'EST CETTE VALEUR QUI CHANGE TOUT : */
+    height: 900px; /* On force une très grande hauteur */
+    
+    padding: 0; /* On enlève le padding pour que l'iframe colle aux bords si voulu */
+    display: block;
+    position: relative;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Pied de page et Bouton */
+.pdf-footer-action {
+    background-color: #1e1e1e;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #333;
+}
+
+/* Bouton Rouge Cyber */
+.btn-download-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(43, 43, 43, 1);
+    color: #ff4b4b; /* Texte rouge */
+    border: 1px solid #ff4b4b; /* Bordure rouge */
+    padding: 12px 35px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    box-shadow: 0 0 10px rgba(255, 75, 75, 0.1);
+}
+
+.btn-download-hero:hover {
+    background-color: #ff4b4b;
+    color: white;
+    box-shadow: 0 0 25px rgba(255, 75, 75, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Adaptation Mobile (on réduit un peu sur téléphone sinon c'est trop grand) */
+@media (max-width: 768px) {
+    .pdf-content {
+        height: 500px; /* Moins haut sur mobile */
+    }
+    .layout-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    .sidebar-profile {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+/* =========================================
+   PAGE CONTACT & FORMULAIRE
+   ========================================= */
+
+.form-box {
+    background-color: var(--bg-card); /* Fond de la carte */
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-width: 800px; /* Largeur max pour que ce soit joli */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #f0f6fc;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Style des champs de saisie (Input et Textarea) */
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #0d1117; /* Fond très sombre */
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: #c9d1d9; /* Texte clair */
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s ease;
+}
+
+/* Effet quand on clique dans un champ */
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent); /* Devient bleu au clic */
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+/* Le bouton Envoyer */
+.btn-submit {
+    background-color: var(--accent); /* Bleu */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #388bfd; /* Bleu un peu plus clair */
+    transform: translateY(-2px);
+}

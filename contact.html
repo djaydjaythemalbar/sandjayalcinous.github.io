@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Sandjay ALCINOUS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="index.html">
+                   <img src="images/logo-sja.png" alt="SJA Logo" class="nav-logo-img">
+                   <span>Alcinous.Portfolio</span>
+                </a>
+            </div>
+            <ul>
+                <li><a href="index.html">À propos</a></li>
+                <li><a href="projects.html">Projets</a></li>
+                <li><a href="cv.html">CV & Parcours</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="layout-container">
+        <aside class="sidebar-profile">
+            <div class="profile-card">
+                <img src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="Sandjay Alcinous">
+                <h2>Sandjay ALCINOUS</h2>
+                <span class="badge-role">Étudiant R&T & Cyber</span>
+                <div class="contact-list">
+                    <div class="contact-item"><i class="fa-solid fa-location-dot"></i> La Réunion</div>
+                    <div class="contact-item"><i class="fa-solid fa-graduation-cap"></i> IUT Saint-Pierre</div>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/djaydjaythemalbar" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://re.linkedin.com/in/sandjay-alcinous-8ba2172a4" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="section-title">Me Contacter</h1>
+            
+            <div class="form-box">
+                <p style="margin-bottom: 25px; color: #8b949e;">
+                    Vous avez un projet ou une opportunité de stage ? Envoyez-moi un message via ce formulaire.
+                </p>
+                
+                <form action="https://formsubmit.co/s.alcinous@rt-iut.re" method="POST">
+                    
+                    <input type="text" name="_honey" style="display: none;"> <input type="hidden" name="_captcha" value="false"> <input type="hidden" name="_subject" value="Nouveau message du Portfolio !"> <input type="hidden" name="_next" value="https://djaydjaythemalbar.github.io/contact.html"> 
+                    
+                    <div class="form-group">
+                        <label>Nom Complet</label>
+                        <input type="text" name="name" class="form-control" required placeholder="Ex: Jean Dupont">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Adresse Email</label>
+                        <input type="email" name="email" class="form-control" required placeholder="Ex: jean@exemple.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" rows="6" class="form-control" placeholder="Bonjour, je vous contacte pour..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fa-solid fa-paper-plane"></i> Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
